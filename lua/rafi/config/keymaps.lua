@@ -392,6 +392,16 @@ end
 -- Toggle quickfix window
 map('n', '<Leader>q', function() RafiUtil.edit.toggle_list('quickfix') end, { desc = 'Open Quickfix' })
 
+-- Apply quickfix to current string
+local function quickfix()
+    vim.lsp.buf.code_action({
+        filter = function(a) return a.isPreferred end,
+        apply = true
+    })
+end
+
+map('n', '<leader>qf', quickfix, {desc = 'Apply quickfix to current string'})
+
 -- Set locations with diagnostics and open the list.
 map('n', '<Leader>a', function()
 	if vim.bo.filetype ~= 'qf' then
